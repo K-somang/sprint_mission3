@@ -14,7 +14,7 @@ const upload = require('./middlewares/upload'); // 위에서 만든 Multer 미�
 const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler'); // 에러 핸들러 임포트
 
 
-const port = process.env.PORT || 4000; // .env 파일에서 PORT를 가져오거나 기본값 3000 사용
+const port = process.env.PORT || 3000; // .env 파일에서 PORT를 가져오거나 기본값 3000 사용
 
 
 // --- 1. 미들웨어 설정 ---
