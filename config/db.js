@@ -3,7 +3,7 @@ const { Pool } = require('pg');
 
 // PostgreSQL 연결 설정
 const pool = new Pool({
-  user: 'postgres',        // PostgreSQL 사용자 이름
+  user: 'ksomang',        // PostgreSQL 사용자 이름
   host: 'localhost',        // PostgreSQL 호스트 (예: localhost)
   database: 'sprint_mission3',// 데이터베이스 이름
   password: '1810',// 데이터베이스 비밀번호
