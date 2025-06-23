@@ -2,6 +2,9 @@
 // Express 프레임워크 로드
 import express from 'express';
 
+// 1-1. process.env.PORT
+const express = require('express');
+
 // Express 서버의 핵심 객체 생성
 const app = express();
 
