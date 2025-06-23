@@ -58,10 +58,6 @@ app.post('/upload', upload.single('image'), (req, res, next) => {
     res.status(200).json({ message: '이미지 업로드 성공!', imageUrl: imageUrl });
 });
 
-// 에러 처리 미들웨어는 별도로 구현해야 합니다 (아래 '에러 처리' 섹션 참조)
-// Multer 에러는 `next(err)`로 전달되므로 에러 핸들러에서 처리됩니다.
-
-
 // 3.2 중고마켓
 app.post('/products', validateProduct, (req, res) => {
     // 유효성 검증을 통과한 경우에만 이 블록이 실행됩니다.
