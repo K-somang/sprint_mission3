@@ -10,7 +10,7 @@ const express = require('express'); // Express 프레임워크 로드
 const { Pool } = require('pg');    // PostgreSQL 드라이버 로드
 
 const app = express();
-const validateProduct = require('./validation/productValidation'); // 위에서 만든 미들웨어 임포트
+const validateProduct = require('./validation/productvalidation'); // 위에서 만든 미들웨어 임포트
 const upload = require('./middlewares/upload'); // 위에서 만든 Multer 미들웨어 임포트
 const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler'); // 에러 핸들러 임포트
 
