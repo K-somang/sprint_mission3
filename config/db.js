@@ -1,5 +1,4 @@
-// config/db.js
-const { Pool } = require('pg');
+import { Pool } from 'pg';
 
 // PostgreSQL 연결 설정
 const pool = new Pool({
@@ -24,4 +23,4 @@ pool.connect((err, client, release) => {
   });
 });
 
-module.exports = pool;
+export default pool;

@@ -16,17 +16,17 @@ import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
 const port = process.env.PORT || 3000; 
 
 // 중고마켓, 자유게시판 스키마 가져오기
-import productroutes from './productroutes';
-import articleroutes from './articleroutes';
+import productroutes from './productroutes.js';
+import articleroutes from './articleroutes.js';
 
 // 댓글 라우터 가져오기
 import usedMarketCommentRoutes from './usedMarketCommentRoutes.js';
 import freeBoardCommentRoutes from './freeBoardCommentRoutes.js';
 
 // 미들웨어 임포트
-import validateProduct from './validation/productvalidation';
+import validateProduct from './validation/productvalidation.js';
 // Multer 미들웨어 임포트
-import upload from './middlewares/upload';
+import upload from './middlewares/upload.js';
 
 // 2. 미들웨어 설정 
 // JSON 형식의 요청 본문(body)을 파싱하기 위한 미들웨어

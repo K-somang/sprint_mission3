@@ -1,8 +1,8 @@
 // routes/articleRoutes.js
-const express = require('express');
+import express from 'express';
 const router = express.Router();
 // 데이터베이스 연결 풀을 가져옵니다.
-import pool from './config/db';
+import pool from './config/db.js';
 
 // --- 게시글 등록 API (POST /articles) ---
 router.post('/', async (req, res) => {

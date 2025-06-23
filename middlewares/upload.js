@@ -1,5 +1,5 @@
-const multer = require('multer');
-const path = require('path'); // 파일 경로 처리를 위해
+import multer from 'multer';
+import path from 'path';
 
 // 저장될 디스크 스토리지 설정
 const storage = multer.diskStorage({
@@ -31,4 +31,4 @@ const upload = multer({
     }
 });
 
-module.exports = upload;
+export default upload;

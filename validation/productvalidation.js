@@ -1,4 +1,4 @@
-const { body, validationResult } = require('express-validator');
+import { body, validationResult } from 'express-validator';
 
 const validateProduct = [
     // 'name' 필드가 비어있지 않고, 최소 2글자 이상인지 검증
@@ -30,4 +30,4 @@ const validateProduct = [
     }
 ];
 
-module.exports = validateProduct;
+export default validateProduct;
