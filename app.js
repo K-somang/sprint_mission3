@@ -1,4 +1,21 @@
-require('dotenv').config();
+// 1. 기능 호출
+// Express 프레임워크 로드
+const express = require('express'); 
+
+// Express 서버의 핵심 객체 생성
+const app = express();
+
+// 환경 변수 호출
+import dotenv from 'dotenv';
+dotenv.config();
+
+// 에러 핸들러 임포트
+const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler'); 
+
+// .env 파일에서 PORT를 가져오거나 기본값 3000 사용
+const port = process.env.PORT || 3000; 
+
+// 중고마켓, 자유게시판 스키마 가져오기
 const productroutes = require('./productroutes'); 
 const articleroutes = require('./articleroutes'); 
 
@@ -6,22 +23,17 @@ const articleroutes = require('./articleroutes');
 const usedMarketCommentRoutes = require('./usedMarketCommentRoutes.js');
 const freeBoardCommentRoutes = require('./freeBoardCommentRoutes.js');
 
-const express = require('express'); // Express 프레임워크 로드
-
-const app = express();
-const validateProduct = require('./validation/productvalidation'); // 위에서 만든 미들웨어 임포트
-const upload = require('./middlewares/upload'); // 위에서 만든 Multer 미들웨어 임포트
-const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler'); // 에러 핸들러 임포트
+// 미들웨어 임포트
+const validateProduct = require('./validation/productvalidation'); 
+// Multer 미들웨어 임포트
+const upload = require('./middlewares/upload');
 
 
-const port = process.env.PORT || 3000; // .env 파일에서 PORT를 가져오거나 기본값 3000 사용
-
-
-// --- 1. 미들웨어 설정 ---
+// 2. 미들웨어 설정 
 // JSON 형식의 요청 본문(body)을 파싱하기 위한 미들웨어
-// app.use(express.json());
-app.use(express.json()); // POST 등에서 req.body 사용 시 필요
-app.use(express.urlencoded({ extended: true })); // 폼 데이터 처리용
+app.use(express.json()); 
+// 폼 데이터 처리용
+app.use(express.urlencoded({ extended: true })); 
 
 
 
