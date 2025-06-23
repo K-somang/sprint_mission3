@@ -191,4 +191,4 @@ router.get('/', async (req, res) => {
 });
 
 
-module.exports = router; // router 객체를 모듈로 내보냅니다.
+export default router;

@@ -2,19 +2,6 @@
 import express from 'express';
 const router = express.Router(); // Express 라우터 인스턴스를 생성합니다.
 
-
-/* // --- 데이터베이스 연결 풀(pool) ---
-// 실제 프로젝트에서는 이 부분을 별도의 설정 파일에서 가져오는 것이 좋습니다.
-// 예: const pool = require('../config/db');
-const { Pool } = require('pg');
-const pool = new Pool({
-  user: 'your_user',
-  host: 'your_host',
-  database: 'your_database',
-  password: 'your_password',
-  port: 5432,
-}); */
-
 // 3.2 상품 등록 API
 router.get('/', async (req, res) => {
     const { name, description, price, tags } = req.query;
@@ -240,4 +227,4 @@ router.get('/list', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;

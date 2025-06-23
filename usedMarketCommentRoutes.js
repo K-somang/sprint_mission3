@@ -153,4 +153,4 @@ router.get('/:productId', async (req, res) => {
     }
 });
 
-module.exports = router;
+export default router;
