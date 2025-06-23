@@ -7,7 +7,6 @@ const usedMarketCommentRoutes = require('./usedMarketCommentRoutes.js');
 const freeBoardCommentRoutes = require('./freeBoardCommentRoutes.js');
 
 const express = require('express'); // Express 프레임워크 로드
-const { Pool } = require('pg');    // PostgreSQL 드라이버 로드
 
 const app = express();
 const validateProduct = require('./validation/productvalidation'); // 위에서 만든 미들웨어 임포트
@@ -23,25 +22,6 @@ const port = process.env.PORT || 3000; // .env 파일에서 PORT를 가져오거
 // app.use(express.json());
 app.use(express.json()); // POST 등에서 req.body 사용 시 필요
 app.use(express.urlencoded({ extended: true })); // 폼 데이터 처리용
-
-// --- 2. PostgreSQL 데이터베이스 연결 풀 설정 ---
-// 여러 클라이언트 요청을 효율적으로 처리하기 위해 연결 풀(Connection Pool)을 사용합니다.
-const pool = new Pool({
-    user: 'ksomang',
-    host: 'localhost', // 찾아보고 수정바람
-    database: 'sprint_mission3',
-    password: 1810,
-    port: 5432,
-});
-
-// 데이터베이스 연결 테스트 => 중요한 내용 아님
-pool.on('connect', () => {
-    console.log('Connected to the PostgreSQL database!');
-});
-
-pool.on('error', (err) => {
-    console.error('Error connecting to the database:', err);
-});
 
 
 
