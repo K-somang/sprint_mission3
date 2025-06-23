@@ -12,11 +12,16 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
+    "@prisma/client": "^6.10.1",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "express-validator": "^7.2.1",
     "multer": "^2.0.1",
     "pg": "^8.16.2",
+    "prisma": "^6.10.1",
     "serve-favicon": "^2.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
   }
 }
