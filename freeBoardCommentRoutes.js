@@ -1,7 +1,9 @@
 // routes/freeBoardCommentRoutes.js
 const express = require('express');
 const router = express.Router();
-const pool = require('./config/db'); // 데이터베이스 연결 풀
+ // 데이터베이스 연결 풀
+import pool from './config/db';
+
 
 // --- 자유게시판 댓글 등록 API (POST /free-board-comments/:articleId) ---
 router.post('/:articleId', async (req, res) => {

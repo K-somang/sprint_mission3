@@ -1,5 +1,5 @@
 // routes/productRoutes.js
-const express = require('express');
+import express from 'express';
 const router = express.Router(); // Express 라우터 인스턴스를 생성합니다.
 
 

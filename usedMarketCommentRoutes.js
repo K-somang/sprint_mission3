@@ -1,7 +1,8 @@
 // routes/usedMarketCommentRoutes.js
 const express = require('express');
 const router = express.Router();
-const pool = require('./config/db'); // 데이터베이스 연결 풀
+// 데이터베이스 연결 풀
+import pool from './config/db';
 
 // --- 중고마켓 댓글 등록 API (POST /used-market-comments/:productId) ---
 router.post('/:productId', async (req, res) => {

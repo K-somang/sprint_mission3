@@ -1,6 +1,6 @@
 // 1. 기능 호출
 // Express 프레임워크 로드
-const express = require('express'); 
+import express from 'express';
 
 // Express 서버의 핵심 객체 생성
 const app = express();
@@ -10,24 +10,23 @@ import dotenv from 'dotenv';
 dotenv.config();
 
 // 에러 핸들러 임포트
-const { errorHandler, notFoundHandler } = require('./middlewares/errorHandler'); 
+import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
 
 // .env 파일에서 PORT를 가져오거나 기본값 3000 사용
 const port = process.env.PORT || 3000; 
 
 // 중고마켓, 자유게시판 스키마 가져오기
-const productroutes = require('./productroutes'); 
-const articleroutes = require('./articleroutes'); 
+import productroutes from './productroutes';
+import articleroutes from './articleroutes';
 
 // 댓글 라우터 가져오기
-const usedMarketCommentRoutes = require('./usedMarketCommentRoutes.js');
-const freeBoardCommentRoutes = require('./freeBoardCommentRoutes.js');
+import usedMarketCommentRoutes from './usedMarketCommentRoutes.js';
+import freeBoardCommentRoutes from './freeBoardCommentRoutes.js';
 
 // 미들웨어 임포트
-const validateProduct = require('./validation/productvalidation'); 
+import validateProduct from './validation/productvalidation';
 // Multer 미들웨어 임포트
-const upload = require('./middlewares/upload');
-
+import upload from './middlewares/upload';
 
 // 2. 미들웨어 설정 
 // JSON 형식의 요청 본문(body)을 파싱하기 위한 미들웨어
