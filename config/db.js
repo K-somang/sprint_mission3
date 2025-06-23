@@ -1,13 +1,13 @@
 import { Pool } from 'pg';
 
-/* // PostgreSQL 연결 설정
+// PostgreSQL 연결 설정
 const pool = new Pool({
-  user: 'ksomang',        // PostgreSQL 사용자 이름
-  host: 'localhost',        // PostgreSQL 호스트 (예: localhost)
-  database: 'sprint_mission3',// 데이터베이스 이름
-  password: '1810',// 데이터베이스 비밀번호
-  port: 5432,               // PostgreSQL 기본 포트
-}); */
+  user: 'sprint_mission3_nvsd_user', 
+  host: 'dpg-d1cf6vgdl3ps73fj8glg-a',
+  database: 'sprint_mission3_nvsd',
+  password: '8ZusvsSToJ3kMwSYbyqji41xDUfRBVuG',
+  port: 5432,               
+});
 
 // 연결 테스트
 pool.connect((err, client, release) => {
