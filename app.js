@@ -1,9 +1,15 @@
 // 1. 기능 호출
 // Express 프레임워크 로드
 import express from 'express';
+import cors from 'cors';
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
 
 // Express 서버의 핵심 객체 생성
 const app = express();
+
+app.use(express.json());
+app.use(cors());
 
 // 환경 변수 호출
 import dotenv from 'dotenv';
@@ -28,12 +34,13 @@ import validateProduct from './validation/productvalidation.js';
 // Multer 미들웨어 임포트
 import upload from './middlewares/upload.js';
 
+
+
 // 2. 미들웨어 설정 
 // JSON 형식의 요청 본문(body)을 파싱하기 위한 미들웨어
 app.use(express.json()); 
 // 폼 데이터 처리용
 app.use(express.urlencoded({ extended: true })); 
-
 
 
 // 3.1 기본 라우트
