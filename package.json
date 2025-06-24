@@ -12,6 +12,10 @@
   "author": "",
   "license": "ISC",
   "description": "",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+
   "dependencies": {
     "@prisma/client": "^6.10.1",
     "cors": "^2.8.5",
@@ -25,8 +29,6 @@
   "devDependencies": {
     "nodemon": "^3.1.10",
     "prisma": "^6.10.1"
-  },
-  "prisma": {
-    "seed": "node prisma/seed.js"
   }
+  
 }
