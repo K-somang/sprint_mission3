@@ -1,3 +1,5 @@
+import multer from 'multer';
+
 const errorHandler = (err, req, res, next) => {
     console.error(err.stack); // 개발 단계에서 오류 스택을 콘솔에 출력
 
