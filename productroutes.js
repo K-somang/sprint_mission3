@@ -2,6 +2,9 @@
 import express from 'express';
 const router = express.Router(); // Express 라우터 인스턴스를 생성합니다.
 
+// 데이터베이스 연결 풀
+import pool from './config/db.js';
+
 // 3.2 상품 등록 API
 router.get('/', async (req, res) => {
     const { name, description, price, tags } = req.query;
