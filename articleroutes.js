@@ -15,33 +15,8 @@ router.post('/', async (req, res) => {
     });
     res.status(201).json(article);
   } catch (error) {
-    res.status(500).json({ error: error.message });
-  }
-});
-
-// 게시글 목록 조회
-router.get('/', async (req, res) => {
-  try {
-    const { page = 1, limit = 10, search, sort } = req.query;
-    const skip = (page - 1) * limit;
-    const where = search
-      ? {
-          OR: [
-            { title: { contains: search, mode: 'insensitive' } },
-            { content: { contains: search, mode: 'insensitive' } },
-          ],
-        }
-      : {};
-    const orderBy = sort === 'recent' ? { createdAt: 'desc' } : {};
-    const articles = await prisma.article.findMany({
-      where,
-      skip: Number(skip),
-      take: Number(limit),
-      orderBy,
-    });
-    res.json(articles);
-  } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('게시글 등록 오류:', error);
+    res.status(500).json({ error: '서버에 오류가 발생했습니다.' });
   }
 });
 
@@ -57,7 +32,8 @@ router.get('/:id', async (req, res) => {
     }
     res.json(article);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('상세 조회 오류:', error);
+    res.status(500).json({ error: '상세 조회 중 오류가 발생했습니다.' });
   }
 });
 
@@ -72,7 +48,8 @@ router.patch('/:id', async (req, res) => {
     });
     res.json(updatedArticle);
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('수정 오류:', error);
+    res.status(500).json({ error: '수정 중 오류가 발생했습니다.' });
   }
 });
 
@@ -85,8 +62,43 @@ router.delete('/:id', async (req, res) => {
     });
     res.status(204).send();
   } catch (error) {
-    res.status(500).json({ error: error.message });
+    console.error('삭제 오류:', error);
+    res.status(500).json({ error: '삭제 중 오류가 발생했습니다.' });
   }
 });
 
+// 게시글 목록 조회
+router.get('/', async (req, res) => {
+  try {
+    const { page = 1, limit = 10, search, sort } = req.query;
+    const pageNumber = Math.max(1, Number(page) || 1);
+    const limitNumber = Math.max(1, Math.min(100, Number(limit) || 10));
+    const skip = (pageNumber - 1) * limitNumber;
+    const where = search
+      ? {
+          OR: [
+            { title: { contains: search, mode: 'insensitive' } },
+            { content: { contains: search, mode: 'insensitive' } },
+          ],
+        }
+      : {};
+    const orderBy = sort === 'recent' ? { createdAt: 'desc' } : {};
+    const articles = await prisma.article.findMany({
+      select: {
+        id: true,
+        title: true,
+        content: true,
+        createdAt: true
+      },
+      where,
+      skip,
+      take: limitNumber,
+      orderBy,
+    });
+    res.json(articles);
+  } catch (error) {
+    console.error('목록 조회 오류:', error);
+    res.status(500).json({ error: '목록 조회 중 오류가 발생했습니다.' });
+  }
+});
 export default router;

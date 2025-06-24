@@ -60,18 +60,27 @@ app.post('/upload', upload.single('image'), (req, res, next) => {
     res.status(200).json({ message: '이미지 업로드 성공!', imageUrl: imageUrl });
 });
 
-
+// 3.2 중고시장
 app.use('/products', productroutes);
 
 // 3.3 자유게시판
 app.use('/articles', articleroutes);
 
+// 3.4 중고시장 댓글
+app.use('/usedMarketCommentRoutes', usedMarketCommentRoutes);
+
+// 3.5 자유게시판 댓글
+app.use('/freeBoardCommentRoutes',freeBoardCommentRoutes);
+
+// 3.6 유효성 검증
+app.use('/validateProduct', validateProduct);
 
 // 모든 라우트 처리 후에도 요청이 처리되지 않았다면 404 Not Found 처리
 app.use(notFoundHandler);
 
 // 최종 에러 처리 미들웨어 (항상 모든 미들웨어와 라우트 뒤에 위치해야 함)
 app.use(errorHandler);
+
 
 // 4. 서버 시작
 app.listen(port, () => {
