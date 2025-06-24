@@ -1,34 +1,17 @@
-// Products
 ###
-http://localhost:3000/api/products
-
-###
-http://localhost:3000/api/products?page=1&limit=5
+GET  http://localhost:3000/
 
 ###
-http://localhost:3000/api/products?search=테스트
+POST http://localhost:3000/upload
 
 ###
-http://localhost:3000/api/products?sort=recent
+GET  http://localhost:3000/api/products
 
 ###
-http://localhost:3000/api/products/1
-
-
-
-// Articles
-###
-http://localhost:3000/api/articles
+POST http://localhost:3000/api/products
 
 ###
-http://localhost:3000/api/articles?page=1&limit=5
+GET  http://localhost:3000/api/articles
 
 ###
-http://localhost:3000/api/articles?search=게시글
-
-###
-http://localhost:3000/api/articles?sort=recent
-
-###
-http://localhost:3000/api/articles/1
-
+POST http://localhost:3000/api/articles
