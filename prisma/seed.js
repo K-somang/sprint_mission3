@@ -4,10 +4,10 @@ const prisma = new PrismaClient();
 async function main() {
   console.log('🌱 시드 데이터 생성 시작...');
 
-/*   // 기존 데이터 삭제 (선택사항)
+  // 기존 데이터 삭제 (선택사항)
   await prisma.comment.deleteMany();
   await prisma.product.deleteMany();
-  await prisma.article.deleteMany(); */
+  await prisma.article.deleteMany();
 
   // 상품 데이터 생성
   const products = await prisma.product.createMany({

@@ -3,6 +3,27 @@
 import express from 'express';
 import cors from 'cors';
 import { PrismaClient } from '@prisma/client';
+
+// 에러 핸들러 임포트
+import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
+
+// 중고마켓, 자유게시판 스키마 가져오기
+import productroutes from './routes/productroutes.js';
+import articleroutes from './routes/articleroutes.js';
+
+// 댓글 라우터 가져오기
+import usedMarketCommentRoutes from './routes/usedMarketCommentRoutes.js';
+import freeBoardCommentRoutes from './routes/freeBoardCommentRoutes.js';
+
+// 미들웨어 임포트
+import validateProduct from './validation/validation.js';
+// Multer 미들웨어 임포트
+import upload from './upload/upload.js';
+
+// 환경 변수 호출
+import dotenv from 'dotenv';
+dotenv.config();
+
 const prisma = new PrismaClient();
 
 // Express 서버의 핵심 객체 생성
@@ -11,42 +32,16 @@ const app = express();
 app.use(express.json());
 app.use(cors());
 
-// 환경 변수 호출
-import dotenv from 'dotenv';
-dotenv.config();
+app.use(express.urlencoded({ extended: true })); 
 
-// 에러 핸들러 임포트
-import { errorHandler, notFoundHandler } from './middlewares/errorHandler.js';
+// images 폴더를 공개로 설정
+app.use('/images', express.static('images'));
+
 
 // .env 파일에서 PORT를 가져오거나 기본값 3000 사용
 const port = process.env.PORT || 3000; 
 
-// 중고마켓, 자유게시판 스키마 가져오기
-import productroutes from './productroutes.js';
-import articleroutes from './articleroutes.js';
-
-// 댓글 라우터 가져오기
-import usedMarketCommentRoutes from './usedMarketCommentRoutes.js';
-import freeBoardCommentRoutes from './freeBoardCommentRoutes.js';
-
-// 미들웨어 임포트
-import validateProduct from './validation/productvalidation.js';
-// Multer 미들웨어 임포트
-import upload from './middlewares/upload.js';
-
-
-
-// 2. 미들웨어 설정 
-// JSON 형식의 요청 본문(body)을 파싱하기 위한 미들웨어
-app.use(express.json()); 
-// 폼 데이터 처리용
-app.use(express.urlencoded({ extended: true })); 
-
-
 // 3.1 기본 라우트
-app.get('/', (req, res) => {
-    res.send('Welcome to the User API Server (Node.js + Express)!');
-});
 
 app.use('/uploads', express.static('uploads'));
 
@@ -86,4 +81,5 @@ app.use(errorHandler);
 app.listen(port, () => {
     console.log(`Server running on http://localhost:${port}`);
 });
+
 

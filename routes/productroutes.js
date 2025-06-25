@@ -1,7 +1,10 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
+import * as productsController from '../controllers/productsController.js';
 const prisma = new PrismaClient();
 const router = express.Router();
+
+router.post('/', productsController.createProduct);
 
 // 상품 등록
 router.post('/', async (req, res) => {
