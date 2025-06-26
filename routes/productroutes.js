@@ -1,10 +1,10 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-import * as productsController from '../controllers/productsController.js';
-const prisma = new PrismaClient();
+import prisma from '../db.js';
+// import * as productsController from '../controllers/productsController.js';
 const router = express.Router();
 
-router.post('/', productsController.createProduct);
+// 중복 사항
+// router.post('/', productsController.createProduct);
 
 // 상품 등록
 router.post('/', async (req, res) => {
@@ -15,10 +15,10 @@ router.post('/', async (req, res) => {
         error: '이름과 설명은 필수 입력 사항입니다.'
       });
     }
-    if(price === undefined || price === null || price < 0) {
+    if(Number(price) === undefined || Number(price) === null || Number(price) < 0) {
       return res.status(400).json({ error : '상품 가격은 0 이상이어야 합니다.' });
     }
-    if (typeof price !== 'number') {
+    if (typeof Number(price) !== 'number') {
       return res.status(400).json({
         error: '가격은 숫자이어야 합니다.'
       });
@@ -54,7 +54,8 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const data = req.body;
+    const { name, description, price, tags } = req.body;
+    const data = { name, description, price, tags };
     const updatedProduct = await prisma.product.update({
       where: { id: Number(id) },
       data,
@@ -96,7 +97,7 @@ router.get('/', async (req, res) => {
         }
       : {};
     const orderBy = sort === 'recent' ? { createdAt: 'desc' } : undefined;
-    const products = await prisma.article.findMany({
+    const products = await prisma.product.findMany({
       select: {
         id: true,
         name: true,

@@ -4,7 +4,7 @@ import express from 'express';
 // PrismaClient 인스턴스를 가져옵니다.
 import prisma from '../prisma/prisma.js';
 // 유효성 검증 미들웨어 (JavaScript 파일로 존재해야 함)
-import { validate, commentSchema } from '../validation/validation.js';
+import { validate, commentSchema } from '../middlewares/validation.js';
 // 커스텀 에러 핸들러 (JavaScript 파일로 존재해야 함)
 import { errorHandler } from '../middlewares/errorHandler.js';
 
@@ -12,16 +12,10 @@ const router = express.Router();
 
 // --- 중고마켓 댓글 등록 API (POST /products/:productId/comments) ---
 // 참고: 이 라우트는 productRoutes.js에 통합되는 것이 더 적합합니다.
-router.post('/:productId', validate(commentSchema), async (req, res, next) => {
+router.post('/:productId/comments', validate(commentSchema), async (req, res, next) => {
     try {
         const { productId } = req.params; // Product ID는 UUID 형태일 것으로 가정
         const { content } = req.body;
-
-        // Product 존재 여부 확인 (옵션: 실제 DB에 없는 Product ID로 댓글 달리는 것을 방지)
-        const existingProduct = await prisma.product.findUnique({ where: { id: productId } });
-        if (!existingProduct) {
-            return next(new errorHandler('상품을 찾을 수 없습니다.', 404));
-        }
 
         const comment = await prisma.productComment.create({
             data: {
@@ -52,8 +46,9 @@ router.patch('/:productId/comments/:commentId', validate(commentSchema), async (
         const { commentId } = req.params; // Comment ID는 UUID 형태일 것으로 가정
         const { content } = req.body;
 
-        const updatedComment = await prisma.productComment.update({
+        const updatedComment = await prisma.comment.update({
             where: { id: commentId },
+            productId: productId ,
             data: { content: content },
             select: { // 필요한 필드만 선택적으로 반환
                 id: true,
@@ -81,7 +76,7 @@ router.delete('/:productId/comments/:commentId', async (req, res, next) => {
     try {
         const { commentId } = req.params; // Comment ID는 UUID 형태일 것으로 가정
 
-        await prisma.productComment.delete({
+        await prisma.comment.delete({
             where: { id: commentId },
         });
         res.status(204).send(); // No Content (성공적으로 삭제되었지만 반환할 내용이 없을 때)
@@ -110,15 +105,13 @@ router.get('/:productId/comments', async (req, res, next) => {
             return next(new errorHandler('상품을 찾을 수 없습니다.', 404));
         }
 
-        const comments = await prisma.productComment.findMany({
+        const comments = await prisma.comment.findMany({
             where: { productId: productId },
             take: parsedLimit + 1, // 다음 페이지 존재 여부 확인을 위해 limit보다 1개 더 가져옴
             ...(cursor && { // cursor가 존재할 경우에만 skip과 cursor 옵션 추가
                 skip: 1, // 커서 레코드 자신은 건너뛰고 다음 레코드부터 가져옴
-                cursor: {
-                    id: cursor, // cursor는 이전 마지막 레코드의 ID
-                },
-            }),
+                cursor: { createdAt: comments[0]?.createdAt },
+                }),
             orderBy: {
                 createdAt: 'desc', // 최신순 정렬
             },
@@ -135,7 +128,7 @@ router.get('/:productId/comments', async (req, res, next) => {
         if (comments.length > parsedLimit) {
             hasNextPage = true;
             comments.pop(); // 초과로 가져온 1개 제거
-            nextCursor = comments[comments.length - 1].id; // 마지막 댓글의 ID가 다음 커서
+            nextCursor = comments.length > 0 ? comments[comments.length - 1].id : null
         }
 
         res.status(200).json({

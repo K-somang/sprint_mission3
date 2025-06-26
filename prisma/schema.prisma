@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
@@ -13,22 +7,36 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model User {
+  id        Int       @id @default(autoincrement())
+  email     String    @unique
+  name      String?
+  password  String    // 해시된 비밀번호
+  role      String    @default("USER") // 예: USER | ADMIN
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
 
-/* model User {
-  id    Int     @id @default(autoincrement())
-  email String  @unique
-  name  String?
-} */
+    // 역방향 관계
+  products  Product[]
+  articles  Article[]
+  comments  Comment[]
+
+}
 
 model Product {
   id          Int       @id @default(autoincrement())
   name        String
   description String
   price       Int
-  tags        String[]
+  tags        String[] // 필수 배열, null 허용 안됨
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
-  comments  Comment[]
+
+    // 외래 키
+  userId   Int
+  user     User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  comments Comment[] @relation("ProductComments")
 
 }
 
@@ -38,7 +46,11 @@ model Article {
   content   String
   createdAt DateTime  @default(now())
   updatedAt DateTime  @updatedAt
-  comments  Comment[]
+
+  userId Int
+  user   User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  comments Comment[] @relation("ArticleComments")
 
 }
 
@@ -48,9 +60,15 @@ model Comment {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   
+  // 작성자
+  userId Int
+  user   User  @relation(fields: [userId], references: [id], onDelete: Cascade)  
+  
   // 관계 설정
-  productId Int?
+  productId Int? 
   articleId Int?
-  product   Product? @relation(fields: [productId], references: [id], onDelete: Cascade)
-  article   Article? @relation(fields: [articleId], references: [id], onDelete: Cascade)
+  product  Product? @relation("ProductComments", fields:[productId], references:[id], onDelete:Cascade)
+  article  Article? @relation("ArticleComments", fields:[articleId], references:[id], onDelete:Cascade)
+  @@index([productId])
+  @@index([articleId])
 }

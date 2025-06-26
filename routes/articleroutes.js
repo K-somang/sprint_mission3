@@ -1,6 +1,5 @@
 import express from 'express';
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from '../db.js';
 const router = express.Router();
 
 // 게시글 등록
@@ -41,10 +40,10 @@ router.get('/:id', async (req, res) => {
 router.patch('/:id', async (req, res) => {
   try {
     const { id } = req.params;
-    const data = req.body;
+    const { title, content } = req.body;          // 허용 필드만
     const updatedArticle = await prisma.article.update({
       where: { id: Number(id) },
-      data,
+      data: { title, content },
     });
     res.json(updatedArticle);
   } catch (error) {
@@ -82,7 +81,7 @@ router.get('/', async (req, res) => {
           ],
         }
       : {};
-    const orderBy = sort === 'recent' ? { createdAt: 'desc' } : {};
+    const orderBy = sort === 'recent' ? { createdAt: 'desc' } : undefined;
     const articles = await prisma.article.findMany({
       select: {
         id: true,
