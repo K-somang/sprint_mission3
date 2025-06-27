@@ -55,10 +55,10 @@ app.post('/upload', upload.single('image'), (req, res) => {
 });
 
 // 라우트 설정 (RESTful 스타일)
-app.use('/products', productRoutes);
-app.use('/articles', articleRoutes);
-app.use('/used-market/comments', usedMarketCommentRoutes); // 표준화된 경로
-app.use('/free-board/comments', freeBoardCommentRoutes);   // 표준화된 경로
+app.use('/products', productRoutes); // 중고시장
+app.use('/articles', articleRoutes); // 자유게시판
+app.use('/products/:productId/comments', usedMarketCommentRoutes); // 중고시장 댓글
+app.use('/articles/comments', freeBoardCommentRoutes); // 자유게시판 댓글
 
 // 에러 핸들러
 app.use(notFoundHandler);

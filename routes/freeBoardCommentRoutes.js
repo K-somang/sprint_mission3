@@ -11,7 +11,6 @@ import { errorHandler } from '../middlewares/errorHandler.js';
 const router = express.Router();
 
 // --- 자유게시판 댓글 등록 API (POST /articles/:articleId/comments) ---
-// 참고: 이 라우트는 articleRoutes.js에 통합되는 것이 더 적합합니다.
 router.post('/:articleId/comments', validate(commentSchema), async (req, res, next) => {
     try {
         const articleId = parseInt(req.params.articleId, 10);

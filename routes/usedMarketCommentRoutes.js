@@ -11,7 +11,6 @@ import { errorHandler } from '../middlewares/errorHandler.js';
 const router = express.Router();
 
 // --- 중고마켓 댓글 등록 API (POST /products/:productId/comments) ---
-// 참고: 이 라우트는 productRoutes.js에 통합되는 것이 더 적합합니다.
 router.post('/:productId/comments', validate(commentSchema), async (req, res, next) => {
     try {
         const { productId } = req.params; // Product ID는 UUID 형태일 것으로 가정
@@ -21,6 +20,7 @@ router.post('/:productId/comments', validate(commentSchema), async (req, res, ne
             data: {
                 productId: productId, // Prisma는 자동으로 관계 설정
                 content: content,
+                userId : userId
             },
             select: { // 필요한 필드만 선택적으로 반환
                 id: true,
