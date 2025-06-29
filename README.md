@@ -4,8 +4,8 @@
 ### • Product 스키마를 작성해 주세요.👌
 
 ### • 상품 등록 API를 만들어 주세요.👌
-  ☞ POST - http://localhost:3000/products
-  ☞ BODY의 raw에서 아래의 내용을 입력하면 등록이 됩니다.
+####  ☞ POST - http://localhost:3000/products
+####  ☞ BODY의 raw에서 아래의 내용을 입력하면 등록이 됩니다.
     {
       "name": "iPhone 15 Pro",
       "description": "거의 새것 같은 아이폰 13 프로입니다. 액정 보호필름과 케이스 사용으로 스크래치 없습니다.",
@@ -20,34 +20,34 @@
     }  
 
 ### • 상품 상세 조회 API를 만들어 주세요.👌
-  ☞ GET - http://localhost:3000/products/1
+####  ☞ GET - http://localhost:3000/products/1
 
 ### • 상품 수정 API를 만들어 주세요.👌
-  ☞ PATCH - http://localhost:3000/products/1
-  ☞ BODY의 raw에서 아래의 내용을 입력하면 수정이 됩니다.
+####  ☞ PATCH - http://localhost:3000/products/1
+####  ☞ BODY의 raw에서 아래의 내용을 입력하면 수정이 됩니다.
     {
       "name": "iPhone 15 Pro",
       "price": 950000,
     }
 
 ### • 상품 삭제 API를 만들어 주세요.👌
-  ☞ DELETE - http://localhost:3000/products/5
+####  ☞ DELETE - http://localhost:3000/products/5
 
 ### • 상품 목록 조회 API를 만들어 주세요.👌
-  ☞ GET - http://localhost:3000/products
+####  ☞ GET - http://localhost:3000/products
 
 ### • 각 API에 적절한 에러 처리를 해 주세요.👌
-  ☞ 400 401 500번 에러 사용
+####  ☞ 400 401 500번 에러 사용
+
 ### • 각 API 응답에 적절한 상태 코드를 리턴하도록 해 주세요.👌
-  ☞ 
 
 
 ## 자유게시판
 ### • Article 스키마를 작성해 주세요.👌
 
 ### • 게시글 등록 API를 만들어 주세요.👌
-  ☞ POST - http://localhost:3000/articles
-  ☞ BODY의 raw에서 아래의 내용을 입력하면 등록이 됩니다.
+####  ☞ POST - http://localhost:3000/articles
+####  ☞ BODY의 raw에서 아래의 내용을 입력하면 등록이 됩니다.
   {    
     "title": "중고 거래 팁을 공유합니다",
     "content": "중고 거래를 위한 몇 가지 팁을 알려드립니다. 첫째, 직거래 시 공공장소에서 만나세요.…"
@@ -56,21 +56,21 @@
   }
 
 ### • 게시글 상세 조회 API를 만들어 주세요.👌
-  ☞ GET - http://localhost:3000/articles/1
+####  ☞ GET - http://localhost:3000/articles/1
 
 ### • 게시글 수정 API를 만들어 주세요.👌
-  ☞ PATCH - http://localhost:3000/articles/1
-  ☞ BODY의 raw에서 아래의 내용을 입력하면 수정이 됩니다.
+####  ☞ PATCH - http://localhost:3000/articles/1
+#### ☞ BODY의 raw에서 아래의 내용을 입력하면 수정이 됩니다.
   {    
     "title": "중고 거래 팁을 공유합니다",
     "content": "중고 거래를 위한 몇 가지 팁을 알려드립니다. 첫째, 직거래 시 공공장소에서 만나세요.…"
   }
 
 ### • 게시글 삭제 API를 만들어 주세요.👌
-  ☞ DELETE - http://localhost:3000/articles/5
+####  ☞ DELETE - http://localhost:3000/articles/5
 
 ### • 게시글 목록 조회 API를 만들어 주세요.👌
-  ☞ GET - http://localhost:3000/articles
+####  ☞ GET - http://localhost:3000/articles
 
 
 ## 댓글 ❌ - 코드는 작성했지만 호출이 안되어 오류를 파악하려다 실패하였습니다.
@@ -87,8 +87,8 @@
 
 ## 이미지 업로드
 ### • multer 미들웨어를 사용하여 이미지 업로드 API를 구현해주세요.👌
-  ☞ POST - http://localhost:3000/upload
-  ☞ BODY의 form-data에서
+####  ☞ POST - http://localhost:3000/upload
+####  ☞ BODY의 form-data에서
     key 값은 image로 text와 file 중 file을 선택하고
     Value에 이미지파일을 넣으면 이미지가 등록됩니다.
 
