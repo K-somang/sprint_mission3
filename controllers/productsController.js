@@ -28,9 +28,15 @@ export const createProduct = async (req, res, next) => {
       data: {
         name,
         description,
-        price: parseFloat(price),
+        price: intPrice,
         tags,
         imageUrl,
+        user: {
+          connectOrCreate: {
+            where: { email: 'x@y.z' },
+            create: { email: 'x@y.z' }
+    }
+  }
       },
     });
     res.status(201).json({ message: '상품 등록 완료', product });
@@ -100,7 +106,7 @@ export const updateProduct = async (req, res, next) => {
     const updateData = { 
       name, 
       description, 
-      price: parseFloat(price), 
+      price: intPrice,
       tags 
     };
     

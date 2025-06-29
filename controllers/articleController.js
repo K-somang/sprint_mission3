@@ -12,7 +12,15 @@ export const createArticle = async (req, res, next) => {
     }
 
     const article = await prisma.article.create({
-      data: { title, content },
+      data: { 
+        title, 
+        content, 
+        user: {
+          connectOrCreate: {
+            where: { email: 'x@y.z' },
+            create: { email: 'x@y.z' }
+     }} 
+  },
     });
     res.status(201).json({ message: '게시글 등록 완료', article });
   } catch (err) {

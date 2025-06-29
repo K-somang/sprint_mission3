@@ -12,7 +12,7 @@ router.route('/')
       return res.status(400).json({ error: '필수 필드가 누락되었습니다.' });
     }
     const article = await prisma.article.create({
-      data: { title, content },
+      data: { title, content, user: { connect: { id: 1 } } },
     });
     res.status(201).json(article);
   } catch (error) {

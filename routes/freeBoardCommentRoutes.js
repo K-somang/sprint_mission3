@@ -10,7 +10,7 @@ import { errorHandler } from '../middlewares/errorHandler.js';
 
 const router = express.Router();
 
-// --- 자유게시판 댓글 등록 API (POST /articles/:articleId/comments) ---
+// 자유게시판 댓글 등록 API
 router.post('/:articleId/comments', validate(commentSchema), async (req, res, next) => {
     try {
         const articleId = parseInt(req.params.articleId, 10);
@@ -51,7 +51,7 @@ router.post('/:articleId/comments', validate(commentSchema), async (req, res, ne
     }
 });
 
-// --- 자유게시판 댓글 수정 API (PATCH /articles/:articleId/comments/:commentId) ---
+// 자유게시판 댓글 수정 API
 router.patch('/:articleId/comments/:commentId', validate(commentSchema), async (req, res, next) => {
     try {
         const articleId = parseInt(req.params.articleId, 10);
@@ -90,7 +90,7 @@ router.patch('/:articleId/comments/:commentId', validate(commentSchema), async (
     }
 });
 
-// --- 자유게시판 댓글 삭제 API (DELETE /articles/:articleId/comments/:commentId) ---
+// 자유게시판 댓글 삭제 API
 router.delete('/:articleId/comments/:commentId', async (req, res, next) => {
     try {
         const articleId = parseInt(req.params.articleId, 10);
@@ -114,7 +114,7 @@ router.delete('/:articleId/comments/:commentId', async (req, res, next) => {
     }
 });
 
-// --- 자유게시판 댓글 목록 조회 API (GET /articles/:articleId/comments) - Cursor Pagination ---
+// 자유게시판 댓글 목록 조회 API
 router.get('/:articleId/comments', async (req, res, next) => {
     try {
         const articleId = parseInt(req.params.articleId, 10);

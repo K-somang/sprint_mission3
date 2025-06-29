@@ -10,8 +10,8 @@ import { errorHandler } from '../middlewares/errorHandler.js';
 
 const router = express.Router();
 
-// --- 중고마켓 댓글 등록 API (POST /products/:productId/comments) ---
-router.post('/:productId/comments', validate(commentSchema), async (req, res, next) => {
+// 중고마켓 댓글 등록 API
+router.post('/', validate(commentSchema), async (req, res, next) => {
     try {
         const { productId } = req.params; // Product ID는 UUID 형태일 것으로 가정
         const { content } = req.body;
@@ -40,7 +40,7 @@ router.post('/:productId/comments', validate(commentSchema), async (req, res, ne
     }
 });
 
-// --- 중고마켓 댓글 수정 API (PATCH /products/:productId/comments/:commentId) ---
+// 중고마켓 댓글 수정 API
 router.patch('/:productId/comments/:commentId', validate(commentSchema), async (req, res, next) => {
     try {
         const { commentId } = req.params; // Comment ID는 UUID 형태일 것으로 가정
@@ -71,7 +71,7 @@ router.patch('/:productId/comments/:commentId', validate(commentSchema), async (
     }
 });
 
-// --- 중고마켓 댓글 삭제 API (DELETE /products/:productId/comments/:commentId) ---
+// 중고마켓 댓글 삭제 API
 router.delete('/:productId/comments/:commentId', async (req, res, next) => {
     try {
         const { commentId } = req.params; // Comment ID는 UUID 형태일 것으로 가정
@@ -88,10 +88,10 @@ router.delete('/:productId/comments/:commentId', async (req, res, next) => {
     }
 });
 
-// --- 중고마켓 댓글 목록 조회 API (GET /products/:productId/comments) - Cursor Pagination ---
-router.get('/:productId/comments', async (req, res, next) => {
+// 중고마켓 댓글 목록 조회 API
+router.get('/', async (req, res, next) => {
     try {
-        const { productId } = req.params;
+        const productId = Number(req.query.productId); 
         const { cursor, limit = '10' } = req.query; // limit은 문자열로 넘어올 수 있으므로 파싱
         const parsedLimit = parseInt(limit);
 
@@ -107,10 +107,10 @@ router.get('/:productId/comments', async (req, res, next) => {
 
         const comments = await prisma.comment.findMany({
             where: { productId: productId },
-            take: parsedLimit + 1, // 다음 페이지 존재 여부 확인을 위해 limit보다 1개 더 가져옴
-            ...(cursor && { // cursor가 존재할 경우에만 skip과 cursor 옵션 추가
-                skip: 1, // 커서 레코드 자신은 건너뛰고 다음 레코드부터 가져옴
-                cursor: { createdAt: comments[0]?.createdAt },
+            take: parsedLimit + 1, 
+            ...(cursor && { 
+                skip: 1, 
+                cursor: { createdAt: cursor },
                 }),
             orderBy: {
                 createdAt: 'desc', // 최신순 정렬

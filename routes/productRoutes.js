@@ -3,9 +3,9 @@ import prisma from '../db.js';
 const router = express.Router();
 
 // 루트 경로 (/) - 목록 조회, 상품 등록
-router.route('/')
+router.route('/')    
+  // 상품 등록 로직
   .post(async (req, res) => {
-    // 상품 등록 로직
     try {
       const { name, description, price, tags } = req.body;
       
@@ -26,7 +26,7 @@ router.route('/')
       }
       
       const product = await prisma.product.create({
-        data: { name, description, price, tags },
+        data: { name, description, price, tags, user: { connect: { id: 1 } }  },
       });
       
       res.status(201).json(product);
@@ -35,8 +35,8 @@ router.route('/')
       res.status(500).json({ error: '서버에 오류가 발생했습니다.' });
     }
   })
+  // 상품 목록 조회 로직
   .get(async (req, res) => {
-    // 상품 목록 조회 로직
     try {
       const { page = 1, limit = 10, search, sort } = req.query;
       const pageNumber = Math.max(1, Number(page) || 1);
@@ -76,8 +76,8 @@ router.route('/')
 
 // ID 경로 (/:id) - 상세 조회, 수정, 삭제
 router.route('/:id')
-  .get(async (req, res) => {
-    // 상품 상세 조회 로직
+  // 상품 상세 조회 로직
+  .get(async (req, res) => {    
     try {
       const { id } = req.params;
       const product = await prisma.product.findUnique({
